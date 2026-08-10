@@ -41,10 +41,10 @@ The server is unaware of the injection. No roots, no new protocol primitives, an
 npm install && npm run demo
 ```
 
-`project.faf` itself is [IANA-registered](https://www.iana.org/assignments/media-types/application/vnd.faf+yaml). With [faf-cli](https://npmjs.com/package/faf-cli) installed, see it rendered:
+`project.faf` itself is [IANA-registered](https://www.iana.org/assignments/media-types/application/vnd.faf+yaml). See it rendered — zero install:
 
 ```bash
-faf show
+npx faf-cli show
 ```
 
 Opens a scored HTML card from the current file — always fresh, never a committed snapshot that can go stale.
