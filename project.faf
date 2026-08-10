@@ -10,6 +10,14 @@ stack:
   build: TypeScript (tsc)
   backend: Node.js (stdio MCP server stub)
   api_type: MCP (JSON-RPC 2.0 over stdio)
+  cicd: GitHub Actions (typecheck + demo run, verified green)
+  frontend: None — stdio reference implementation, no UI layer
+  css_framework: None — no UI
+  ui_library: None — no UI
+  state_management: None — stateless demo, no state to manage
+  database: None — no persistence layer
+  connection: None — no database
+  hosting: None — reference implementation, not a deployed service
 tech_stack:
   - TypeScript
   - "@modelcontextprotocol/sdk"
