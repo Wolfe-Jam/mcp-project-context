@@ -78,7 +78,7 @@ The server binary is byte-for-byte identical in both runs. Only the host changed
 - Fills only parameters that are both present in the schema and missing from the call arguments
 - Never overrides an explicit argument supplied by the caller
 
-Identity source is deliberately source-agnostic. This demo uses a minimal `project.faf` file; a production host can derive the same fields from `.git`, environment variables, or workspace configuration.
+Identity source is deliberately source-agnostic. This demo reads its `repository` field from `project.faf`; a production host can derive the same value from `.git`, environment variables, or workspace configuration.
 
 ## What this is
 
