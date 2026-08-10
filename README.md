@@ -64,7 +64,7 @@ The server binary is byte-for-byte identical in both runs. Only the host changed
 
 ## Core logic
 
-`src/param-fill.ts` (~40 lines). It:
+`src/param-fill.ts` (48 lines). It:
 
 - Reads the tool's own `inputSchema`
 - Fills only parameters that are both present in the schema and missing from the call arguments
