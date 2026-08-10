@@ -1,0 +1,7 @@
+# project.faf — minimal sample for the param-fill demo.
+# The one field this demo needs: the project's repo identity.
+# (A real .faf carries the full stack + 6Ws; see faf.one. IANA: application/vnd.faf+yaml)
+project:
+  name: Hello-World
+repository: github.com/octocat/Hello-World
+stack: [TypeScript]
