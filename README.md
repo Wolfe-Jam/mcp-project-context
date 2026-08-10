@@ -35,15 +35,13 @@ The server is unaware of the injection. No roots, no new protocol primitives, an
 
 [SEP-2577](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2577) deprecated Roots in part because of vague semantics and overlap with tool parameters and server configuration. An earlier experiment, [mcp-current-repo](https://github.com/Wolfe-Jam/mcp-current-repo), used Roots to carry project identity; that surface is no longer viable. Parameter injection uses the surface the SEP itself named as the natural alternative.
 
-## Try it now — zero install
-
-`project.faf` itself is [IANA-registered](https://www.iana.org/assignments/media-types/application/vnd.faf+yaml). See it rendered:
+## Render project.faf
 
 ```bash
 npx faf-cli show
 ```
 
-Opens a scored HTML card from the current file — always fresh, never a committed snapshot that can go stale.
+Renders the current `project.faf` as an HTML card (IANA media type `application/vnd.faf+yaml`).
 
 ## Demo
 
