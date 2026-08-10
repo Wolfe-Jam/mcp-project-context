@@ -1,34 +1,56 @@
 # mcp-project-context
 
-**Give an MCP server "current-project" focus — with zero changes to the server.**
+Host-side injection of project identity into existing MCP tool parameters.
 
-Ask a GitHub-connected agent to "show *this* project's issues" and it wanders: `list_repositories` → enumerate every repo → guess the current one → maybe ask you. The host already knows what project you're in. It can fill the tool call before it's ever sent.
+This reference implementation shows how an MCP host can give tools current-project focus by filling parameters such as `owner` and `repo` *before* the call is dispatched. The server receives a normal, complete `tools/call` and requires no modification.
 
-A working proof for [github/github-mcp-server#1683](https://github.com/github/github-mcp-server/issues/1683), post [SEP-2577](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2577) (Roots deprecated, same 2026-07-28-RC wave as STATELESS core):
+## Problem
 
-> "Roots: Vague semantics, overlaps with **tool parameters and server configuration**."
+Many MCP tools (including those in the official github-mcp-server) declare `owner` and `repo` as required parameters. When a user asks an agent to act on "this project," the host already knows the repository identity. Without that identity being supplied, the agent is forced into an exploration phase:
 
-This is the tool-parameter half of that overlap — demonstrated, not just proposed.
+1. List repositories
+2. Guess which one is current
+3. Possibly ask the user
 
-## The fix
+This costs context and latency. The friction is tracked in [github/github-mcp-server#1683](https://github.com/github/github-mcp-server/issues/1683).
+
+## Solution
+
+The host:
+
+1. Obtains the current project identity from a local source
+2. Inspects the target tool's own `inputSchema` (via `tools/list`)
+3. Fills only parameters that are both declared by the tool and currently missing from the call
+4. Dispatches an ordinary `tools/call`
 
 ```
-project.faf              HOST (MCP client)              SERVER
-(repo identity   ──▶ fills owner/repo into  ──▶  receives a complete,
- the host reads)      the tools/call BEFORE          ordinary tool call
-                        it's dispatched               — never changes
+project identity          HOST                          SERVER
+(project.faf, .git,   →   inspect inputSchema        →  ordinary tools/call
+env, workspace…)         fill missing fields only      (unchanged)
 ```
 
-The **host** fills the tool's *existing* parameters before dispatch. The **server** is unmodified — it already declared `owner`/`repo` as required fields; it just always gets them now.
+The server is unaware of the injection. No roots, no new protocol primitives, and no server-side cooperation are required. The same host logic works against any MCP server whose tools already declare matching parameter names, including the current github-mcp-server.
 
-## Before / after (actual output of `npm run demo`)
+## Why not Roots
 
+[SEP-2577](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2577) deprecated Roots in part because of vague semantics and overlap with tool parameters and server configuration. An earlier experiment, [mcp-current-repo](https://github.com/Wolfe-Jam/mcp-current-repo), used Roots to carry project identity; that surface is no longer viable. Parameter injection uses the surface the SEP itself named as the natural alternative.
+
+## Demo
+
+```bash
+npm install && npm run demo
 ```
-BEFORE — plain callTool(), no project.faf awareness
+
+The demo runs the identical tool call twice against an unmodified stub server that mirrors the required parameters of real github-mcp-server tools:
+
+Before (plain callTool):
+```
 ⛔ owner/repo are required — none supplied.
    A real agent now has to enumerate repos, guess, or ask the user.
+```
 
-AFTER  — same call, routed through callToolWithFaf()
+After (same call routed through callToolWithFaf):
+```
 · auto-filled from project.faf: owner, repo
 ✅ Scoped to octocat/Hello-World
    No exploration phase. No server-side change required.
@@ -38,24 +60,35 @@ AFTER  — same call, routed through callToolWithFaf()
      #2 Write the README [open]
 ```
 
-Server binary is byte-for-byte identical in both runs. Only the host changed.
+The server binary is byte-for-byte identical in both runs. Only the host changed.
 
-```bash
-npm install && npm run demo
-```
+## Core logic
 
-## Why this, not roots
+`src/param-fill.ts` (~40 lines). It:
 
-[`mcp-current-repo`](https://github.com/Wolfe-Jam/mcp-current-repo) proved the same fix via MCP roots — since deprecated. Its real finding (the TS SDK hard-enforces `file://` on root URIs) still stands as a useful spec note. This one proves the *other* surface SEP-2577 named: tool parameters — nothing required from the server or the protocol, just a host that fills what it already knows.
+- Reads the tool's own `inputSchema`
+- Fills only parameters that are both present in the schema and missing from the call arguments
+- Never overrides an explicit argument supplied by the caller
 
-## Source-agnostic
+Identity source is deliberately source-agnostic. This demo uses a minimal `project.faf` file; a production host can derive the same fields from `.git`, environment variables, or workspace configuration.
 
-This demo reads `project.faf` — a typed, [IANA-registered](https://www.iana.org/assignments/media-types/application/vnd.faf+yaml) context file (`application/vnd.faf+yaml`) that carries the project's identity in one field. But the mechanism doesn't care where identity comes from — `.git`, an env var, workspace config all feed it the same way.
+## What this is
 
-**What a host would add:** read the repo identity → check the tool's schema for fields it can answer → fill only what's missing, never override an explicit argument. That's the whole idea. See [`src/param-fill.ts`](./src/param-fill.ts) — under 40 lines, no dependencies beyond the MCP SDK already required to talk to any server.
+A reference implementation of a host-side pattern for discussion.
 
-## What this is (and isn't)
+## What this is not
 
-A reference implementation, not a library — nothing here gets `npm install`ed into a real host. Read the code, reimplement the pattern wherever your host already sources project identity. The value is the mechanism, not the package.
+- Not a library or package intended for installation
+- Not an MCP server
+- Not a proposal for new protocol surface
+- Not a full project-context system
 
-MIT. A stub for discussion, not a fork.
+The value is the mechanism. Hosts that already know the current repository can implement the same logic directly.
+
+## Related
+
+- [github/github-mcp-server#1683](https://github.com/github/github-mcp-server/issues/1683)
+- [SEP-2577 (Roots deprecation)](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2577)
+- Predecessor (now obsolete): [mcp-current-repo](https://github.com/Wolfe-Jam/mcp-current-repo)
+
+MIT
