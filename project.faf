@@ -1,7 +1,29 @@
-# project.faf — minimal sample for the param-fill demo.
-# The one field this demo needs: the project's repo identity.
-# (A real .faf carries the full stack + 6Ws; see faf.one. IANA: application/vnd.faf+yaml)
 project:
   name: Hello-World
+  goal: The host already knows what project you're in. It can fill the tool call before it's ever sent. The server never has to change, never needs roots, never needs a new protocol primitive.
+  main_language: TypeScript
+  type: mcp  # found: MCP SDK signal
 repository: github.com/octocat/Hello-World
-stack: [TypeScript]
+stack:
+  - TypeScript
+faf_version: "3.0"
+human_context:
+  who: ""
+  what: Give an MCP server "current-project" focus — with zero changes to the server.
+  why: ""
+  where: ""
+  when: ""
+  how: ""
+monorepo:
+  packages_count: slotignored
+  build_orchestrator: slotignored
+  versioning_strategy: slotignored
+  shared_configs: slotignored
+  remote_cache: slotignored
+tech_stack:
+  - TypeScript
+  - "@modelcontextprotocol/sdk"
+key_files:
+  - package.json
+  - README.md
+  - tsconfig.json
