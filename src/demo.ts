@@ -45,7 +45,7 @@ async function connect(): Promise<Client> {
 const repository = readRepoFromFaf();
 const fafFields = fafFieldsFromRepository(repository);
 
-console.log(`\n🛰️  mcp-param-fill — project.faf → tool-parameter injection → auto-scope`);
+console.log(`\n🛰️  mcp-project-context — project.faf → tool-parameter injection → auto-scope`);
 console.log(`    project.faf repository: ${repository ?? "(none found)"}`);
 
 console.log(`\n${"─".repeat(68)}\nBEFORE — plain callTool(), no project.faf awareness\n${"─".repeat(68)}`);
