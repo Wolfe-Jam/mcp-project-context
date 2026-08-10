@@ -41,6 +41,8 @@ The server is unaware of the injection. No roots, no new protocol primitives, an
 npm install && npm run demo
 ```
 
+`project.faf` itself is [IANA-registered](https://www.iana.org/assignments/media-types/application/vnd.faf+yaml) and renders visually with `faf` ([faf-cli](https://npmjs.com/package/faf-cli)) — `faf show` opens a scored HTML card from the current file, always fresh, never committed as a stale snapshot.
+
 The demo runs the identical tool call twice against an unmodified stub server that mirrors the required parameters of real github-mcp-server tools:
 
 Before (plain callTool):
