@@ -11,13 +11,13 @@ stack:
   backend: Node.js (stdio MCP server stub)
   api_type: MCP (JSON-RPC 2.0 over stdio)
   cicd: GitHub Actions (typecheck + demo run, verified green)
-  frontend: None — stdio reference implementation, no UI layer
-  css_framework: None — no UI
-  ui_library: None — no UI
-  state_management: None — stateless demo, no state to manage
-  database: None — no persistence layer
-  connection: None — no database
-  hosting: None — reference implementation, not a deployed service
+  frontend: slotignored  # no UI layer — stdio reference implementation
+  css_framework: slotignored  # no UI
+  ui_library: slotignored  # no UI
+  state_management: slotignored  # stateless demo, no state to manage
+  database: slotignored  # no persistence layer
+  connection: slotignored  # no database
+  hosting: slotignored  # reference implementation, not a deployed service
 tech_stack:
   - TypeScript
   - "@modelcontextprotocol/sdk"
