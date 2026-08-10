@@ -1,4 +1,4 @@
-# mcp-param-fill
+# mcp-project-context
 
 **Give an MCP server "current-project" focus — with zero changes to the server.**
 
@@ -70,5 +70,9 @@ See [`src/param-fill.ts`](./src/param-fill.ts) — under 40 lines, no dependenci
 npm install
 npm run demo
 ```
+
+## What this is (and isn't)
+
+A reference implementation, not a library — nothing here gets `npm install`ed into a real host. Read `src/param-fill.ts`, reimplement the pattern wherever your host reads `.faf`/`.git`/workspace config today. The value is the mechanism, not the package.
 
 MIT. A stub for discussion, not a fork.
