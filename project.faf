@@ -1,8 +1,31 @@
-# project.faf — demo identity source
+# project.faf — this repo's own identity, and the demo's fixture data.
 # IANA media type: application/vnd.faf+yaml
 #
-# Hosts can equally derive the same fields from .git, environment
-# variables (e.g. GITHUB_REPOSITORY), or workspace configuration.
-# The reference implementation only consumes the `repository` field.
+# `repository` doubles as the demo's fixture value — src/param-fill.ts
+# only consumes that one field. Hosts can equally derive it from .git,
+# environment variables (e.g. GITHUB_REPOSITORY), or workspace config.
 
+faf_version: "3.0"
+project:
+  name: mcp-project-context
+  goal: Host-side injection of project identity into existing MCP tool parameters.
+  main_language: TypeScript
+  type: mcp
 repository: github.com/octocat/Hello-World
+stack:
+  runtime: Node.js
+  build: TypeScript (tsc)
+tech_stack:
+  - TypeScript
+  - "@modelcontextprotocol/sdk"
+human_context:
+  who: MCP host implementers, specifically the github-mcp-server maintainers evaluating repo-scoping approaches
+  what: A reference implementation of host-side tool-parameter injection for MCP, discussed on github/github-mcp-server#1683.
+  why: SEP-2577 deprecated MCP Roots; this proves the tool-parameter alternative the SEP itself named
+  where: github.com/Wolfe-Jam/mcp-project-context
+  when: "2026-08-10"
+  how: Host reads project.faf's repository field, fills matching tool-schema params before dispatch — see src/param-fill.ts
+key_files:
+  - package.json
+  - README.md
+  - tsconfig.json
