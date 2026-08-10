@@ -5,10 +5,10 @@
   "scripts": {
     "demo": "tsx src/demo.ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["mcp", "model-context-protocol", "faf", "project-context"],
+  "author": "wolfejam / FAF",
   "license": "MIT",
-  "description": "",
+  "description": "Host-side injection of project identity into existing MCP tool parameters — zero server changes",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0"
   },
