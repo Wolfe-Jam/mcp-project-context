@@ -100,5 +100,6 @@ The value is the mechanism. Hosts that already know the current repository can i
 - [github/github-mcp-server#1683](https://github.com/github/github-mcp-server/issues/1683)
 - [SEP-2577 (Roots deprecation)](https://github.com/modelcontextprotocol/modelcontextprotocol/pull/2577)
 - Predecessor (now obsolete): [mcp-current-repo](https://github.com/Wolfe-Jam/mcp-current-repo)
+- Successor: [faf-trinity](https://github.com/Wolfe-Jam/faf-trinity) — extends this same param-fill pattern to all three IANA FAF formats (context, memory, agent identity), not just context
 
 MIT
