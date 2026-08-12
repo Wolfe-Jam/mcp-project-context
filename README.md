@@ -4,6 +4,8 @@ Host-side injection of project identity into existing MCP tool parameters.
 
 This reference implementation shows how an MCP host can give tools current-project focus by filling parameters such as `owner` and `repo` *before* the call is dispatched. The server receives a normal, complete `tools/call` and requires no modification.
 
+⭐ Bookmarks it for you, helps other devs find it too.
+
 ## Problem
 
 Many MCP tools (including those in the official github-mcp-server) declare `owner` and `repo` as required parameters. When a user asks an agent to act on "this project," the host already knows the repository identity. Without that identity being supplied, the agent is forced into an exploration phase:
