@@ -102,4 +102,10 @@ The value is the mechanism. Hosts that already know the current repository can i
 - Predecessor (now obsolete): [mcp-current-repo](https://github.com/Wolfe-Jam/mcp-current-repo)
 - Successor: [faf-trinity](https://github.com/Wolfe-Jam/faf-trinity) — extends this same param-fill pattern to all three IANA FAF formats (context, memory, agent identity), not just context
 
+## Citation
+
+> Wolfe, J. (2025). *Format-Driven AI Context Architecture: The .faf Standard for Persistent Project Understanding*. Zenodo. https://doi.org/10.5281/zenodo.18251362
+
+> Wolfe, J. (2026). *Why Agents Need a Passport: .fafa — Portable Identity for the Agentic Era*. Zenodo. https://doi.org/10.5281/zenodo.21951641
+
 MIT
