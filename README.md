@@ -4,7 +4,7 @@ Host-side injection of project identity into existing MCP tool parameters.
 
 This reference implementation shows how an MCP host can give tools current-project focus by filling parameters such as `owner` and `repo` *before* the call is dispatched. The server receives a normal, complete `tools/call` and requires no modification.
 
-⭐ Bookmarks it for you, helps other devs find it too.
+⭐ [Star it on GitHub](https://github.com/Wolfe-Jam/mcp-project-context): bookmarks it for you, helps other devs find it too.
 
 ## Problem
 
